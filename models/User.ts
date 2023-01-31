@@ -28,7 +28,14 @@ const UserSchema: Schema = new Schema(
       type: [String],
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    toJSON: {
+      transform(doc, ret, options) {
+        delete ret.password;
+      },
+    },
+  }
 );
 
 export default model<UserType>("User", UserSchema);
