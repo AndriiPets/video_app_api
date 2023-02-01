@@ -1,6 +1,4 @@
 import express from "express";
-import { CustomRequest } from "../verifyToken";
-import { JwtPayload } from "jsonwebtoken";
 import createError from "../error";
 import User from "../models/User";
 
