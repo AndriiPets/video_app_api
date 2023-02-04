@@ -42,11 +42,18 @@ export const deleteUser = async (
   }
 };
 
-export const getUser = (
+export const getUser = async (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction
-) => {};
+) => {
+  try {
+    const user = await User.findById(req.params.id);
+    res.status(200).json(user);
+  } catch (err) {
+    next(err);
+  }
+};
 
 export const subscribe = (
   req: express.Request,
