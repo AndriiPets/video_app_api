@@ -59,7 +59,12 @@ export const subscribe = (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction
-) => {};
+) => {
+  try {
+  } catch (err) {
+    next(err);
+  }
+};
 
 export const unsubscribe = (
   req: express.Request,
