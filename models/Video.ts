@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import VideoType from "../types/VideoType";
 
 const VideoSchema = new mongoose.Schema(
   {
@@ -42,4 +43,4 @@ const VideoSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model("Video", VideoSchema);
+export default mongoose.model<VideoType>("Video", VideoSchema);

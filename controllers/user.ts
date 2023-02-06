@@ -1,6 +1,7 @@
 import express from "express";
 import createError from "../error";
 import User from "../models/User";
+import UserType from "../models/User";
 
 export const update = async (
   req: express.Request,
@@ -55,22 +56,41 @@ export const getUser = async (
   }
 };
 
-export const subscribe = (
+export const subscribe = async (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction
 ) => {
   try {
+    await User.findByIdAndUpdate(req.query.id, {
+      $push: { subscribedUsers: req.params.id },
+    });
+    await User.findByIdAndUpdate(req.params.id, {
+      $inc: { subscribers: 1 },
+    });
+    res.status(200).json("Subscription successful");
   } catch (err) {
     next(err);
   }
 };
 
-export const unsubscribe = (
+export const unsubscribe = async (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction
-) => {};
+) => {
+  try {
+    await User.findByIdAndUpdate(req.query.id, {
+      $pull: { subscribedUsers: req.params.id },
+    });
+    await User.findByIdAndUpdate(req.params.id, {
+      $inc: { subscribers: -1 },
+    });
+    res.status(200).json("Unsubscription successful");
+  } catch (err) {
+    next(err);
+  }
+};
 
 export const like = (
   req: express.Request,
