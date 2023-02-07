@@ -122,11 +122,52 @@ export const subVideos = async (
 ) => {
   try {
     const user = await User.findById(req.query.id);
-    const subChannels = user!.subscribedUsers;
+    const subChannels = user!.subscribedUsers!;
 
-    const list: string[] = [];
+    const list = await Promise.all(
+      subChannels.map((channelId) => {
+        return Video.find({ userId: channelId });
+      })
+    );
 
-    res.status(200).json(list);
+    res
+      .status(200)
+      .json(
+        list
+          .flat()
+          .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+      );
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getByTag = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  const tags = req.query.tags as string;
+  tags.split(",");
+  try {
+    const videos = await Video.find({ tags: { $in: tags } }).limit(20);
+    res.status(200).json(videos);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const search = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  const query = req.query.q;
+  try {
+    const videos = await Video.find({
+      title: { $regex: query, $options: "i" },
+    }).limit(40);
+    res.status(200).json(videos);
   } catch (err) {
     next(err);
   }

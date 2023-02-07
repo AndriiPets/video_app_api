@@ -10,6 +10,7 @@ interface VideoType extends Document {
   tags: string[];
   likes: string[];
   dislikes: string[];
+  createdAt: Date;
 }
 
 export default VideoType;
