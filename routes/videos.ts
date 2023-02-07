@@ -3,9 +3,11 @@ import {
   addVideo,
   addView,
   deleteVideo,
+  getByTag,
   getVideo,
   popular,
   randomVideos,
+  search,
   subVideos,
   updateVideo,
 } from "../controllers/video";
@@ -36,5 +38,11 @@ router.get("/random", randomVideos);
 
 //get all videos uploaded by user subscribers
 router.get("/sub", verifyToken, subVideos);
+
+//search videos by tags
+router.get("/tags", getByTag);
+
+//search videos by title
+router.get("/search", search);
 
 export default router;
