@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import CommentType from "../types/CommentType";
 
 const CommentSchema = new mongoose.Schema(
   {
@@ -18,4 +19,4 @@ const CommentSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model("Comment", CommentSchema);
+export default mongoose.model<CommentType>("Comment", CommentSchema);
