@@ -1,5 +1,51 @@
 import express from "express";
+import createError from "../error";
+import Comment from "../models/Comment";
+import Video from "../models/Video";
 
-export const test = (req: express.Request, res: express.Response) => {
-  res.json("Great sucess!");
+export const addComment = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  const newComment = new Comment({ ...req.body, userId: req.query.id });
+  try {
+    const savedComment = await newComment.save();
+
+    res.status(200).json(savedComment);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const deleteComment = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  try {
+    const comment = await Comment.findById(req.params.id);
+    const video = await Video.findById(req.params.id);
+    if (req.query.id === comment?.userId || req.query.id === video?.userId) {
+      await Comment.findByIdAndDelete(req.params.id);
+      res.status(200).json("Comment has been deleted");
+    } else {
+      next(createError(403, "You can delete only your comment"));
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getComments = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  try {
+    const comments = await Comment.find({ videoId: req.params.videoId });
+    res.status(200).json(comments);
+  } catch (err) {
+    next(err);
+  }
 };
