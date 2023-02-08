@@ -12,6 +12,7 @@ import videoRoute from "./routes/videos";
 import commentRoute from "./routes/comments";
 import authRoutes from "./routes/auth";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 dotenv.config();
 
@@ -34,6 +35,7 @@ const connect = () => {
 
 app.use(cookieParser());
 app.use(express.json());
+app.use(cors());
 app.use("/api/auth", authRoutes);
 app.use("/api/users", usersRoute);
 app.use("/api/videos", videoRoute);
