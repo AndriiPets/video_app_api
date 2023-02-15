@@ -48,3 +48,11 @@ export const signin = async (
     next(err);
   }
 };
+
+export const logout = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  res.clearCookie("access_token").status(200).json("you are logged out!");
+};
