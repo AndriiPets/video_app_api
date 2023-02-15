@@ -18,6 +18,7 @@ const verifyToken = (
 ) => {
   try {
     const token = req.cookies.access_token;
+    console.log(req.cookies);
 
     if (!token) return next(createError(401, "Not authanticated!"));
 
