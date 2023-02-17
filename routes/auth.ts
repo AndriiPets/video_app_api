@@ -1,5 +1,10 @@
 import express from "express";
-import { signup, signin, logout } from "../controllers/authController";
+import {
+  signup,
+  signin,
+  logout,
+  googleAuth,
+} from "../controllers/authController";
 
 const router = express.Router();
 
@@ -10,7 +15,7 @@ router.post("/signup", signup);
 router.post("/signin", signin);
 
 //Google auth
-router.post("/google");
+router.post("/google", googleAuth);
 
 //logout
 router.get("/logout", logout);
