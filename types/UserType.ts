@@ -1,6 +1,9 @@
 import { Document } from "mongoose";
 
-interface UserType extends Document {
+interface DocumentResult<T> {
+  _doc: T;
+}
+interface UserType extends Document, DocumentResult<UserType> {
   name: string;
   email: string;
   password: string;

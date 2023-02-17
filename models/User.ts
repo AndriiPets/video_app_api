@@ -15,7 +15,6 @@ const UserSchema: Schema = new Schema(
     },
     password: {
       type: String,
-      required: true,
     },
     image: {
       type: String,
@@ -26,6 +25,10 @@ const UserSchema: Schema = new Schema(
     },
     subscribedUsers: {
       type: [String],
+    },
+    fromGoogle: {
+      type: Boolean,
+      default: false,
     },
   },
   {
