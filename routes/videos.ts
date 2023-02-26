@@ -10,6 +10,7 @@ import {
   search,
   subVideos,
   updateVideo,
+  userVideos,
 } from "../controllers/video";
 import verifyToken from "../verifyToken";
 
@@ -28,13 +29,16 @@ router.delete("/:id", verifyToken, deleteVideo);
 router.get("/find/:id", getVideo);
 
 //add view
-router.put("veiw/:id", addView);
+router.put("/veiw/:id", addView);
 
 //sort by popularity
 router.get("/trend", popular);
 
 //get a random videos collection
 router.get("/random", randomVideos);
+
+//get all videos by a user
+router.get("/channel/:id", userVideos);
 
 //get all videos uploaded by user subscribers
 router.get("/sub", verifyToken, subVideos);
