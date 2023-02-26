@@ -142,13 +142,27 @@ export const subVideos = async (
   }
 };
 
+export const userVideos = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  try {
+    const videos = await Video.find({ userId: req.params.id });
+
+    res.status(200).json(videos);
+  } catch (err) {
+    next(err);
+  }
+};
+
 export const getByTag = async (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const tags = req.query.tags as string;
-  tags.split(",");
+  const tag = req.query.tags as string;
+  const tags = tag.split(",");
   try {
     const videos = await Video.find({ tags: { $in: tags } }).limit(20);
     res.status(200).json(videos);
