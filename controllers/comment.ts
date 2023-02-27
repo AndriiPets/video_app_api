@@ -49,3 +49,20 @@ export const getComments = async (
     next(err);
   }
 };
+
+export const editComment = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  try {
+    const updatedComment = await Comment.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body },
+      { new: true }
+    );
+    res.status(200).json(updatedComment);
+  } catch (err) {
+    next(err);
+  }
+};
