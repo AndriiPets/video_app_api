@@ -7,6 +7,7 @@ import {
   unsubscribe,
   like,
   dislike,
+  getAllSubscribedChannels,
 } from "../controllers/user";
 import verifyToken from "../verifyToken";
 
@@ -32,5 +33,8 @@ router.put("/like/:videoId", verifyToken, like);
 
 //dislike a video
 router.put("/dislike/:videoId", verifyToken, dislike);
+
+//get all subscriptions
+router.get("/subscriptions/:id", verifyToken, getAllSubscribedChannels);
 
 export default router;

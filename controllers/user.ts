@@ -128,3 +128,24 @@ export const dislike = async (
     next(err);
   }
 };
+
+export const getAllSubscribedChannels = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  try {
+    const user = await User.findById(req.params.id);
+    const subChannels = user!.subscribedUsers!;
+
+    const list = await Promise.all(
+      subChannels.map((channelId) => {
+        return User.find({ _id: channelId });
+      })
+    );
+
+    res.status(200).json(list.flat());
+  } catch (err) {
+    next(err);
+  }
+};
